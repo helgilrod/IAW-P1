@@ -3,21 +3,43 @@
 ## Objetivo
 Automatizar la compilación de C, ejecutar una prueba sencilla y guardar el binario generado como artefacto descargable.
 
-## 1. Crear el programa
-En la raíz crea `estadistiques.c`:
-```c
+## 1. Comprobar la carpeta de trabajo
+
+```bash
+pwd
+ls -la
+mkdir -p .github/workflows
+```
+
+- `pwd`: muestra la carpeta actual.
+- `ls -la`: permite revisar el contenido del proyecto.
+- `mkdir -p .github/workflows`: crea la ruta para el workflow.
+
+## 2. Crear el programa C
+Crea `estadistiques.c` con este comando:
+
+```bash
+cat > estadistiques.c <<'EOF'
 #include <stdio.h>
 
 int main(void) {
     printf("Programa estadistiques\\n");
     return 0;
 }
+EOF
+cat estadistiques.c
 ```
-`stdio.h` permite usar `printf`. La función `main` es el punto de entrada y devolver `0` indica que terminó correctamente.
 
-## 2. Crear el Makefile
-Crea un archivo llamado exactamente `Makefile`:
-```makefile
+- `cat > estadistiques.c`: crea el archivo con el código.
+- `cat estadistiques.c`: comprueba el contenido guardado.
+- `stdio.h` permite usar `printf`.
+- `main` es el punto de entrada del programa y devolver `0` indica que terminó correctamente.
+
+## 3. Crear el Makefile
+El archivo debe llamarse exactamente `Makefile`:
+
+```bash
+cat > Makefile <<'EOF'
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -31,20 +53,53 @@ test: estadistiques
 
 clean:
 	rm -f estadistiques
+EOF
+cat -te Makefile
 ```
-**Importante:** las líneas de comandos bajo cada regla deben empezar con una tabulación real, no con espacios. `all` es el objetivo predeterminado; `test` ejecuta el programa y `clean` elimina el binario.
 
-## 3. Evitar subir el binario
-En `.gitignore` añade:
-```gitignore
+- `cat > Makefile`: crea el archivo.
+- `cat -te Makefile`: permite distinguir las tabulaciones; las líneas de comandos bajo cada regla deben empezar con una tabulación real.
+- `all` es el objetivo predeterminado.
+- `test` ejecuta el programa.
+- `clean` elimina el binario.
+
+## 4. Probar la compilación local
+En un sistema con GCC y Make instalados:
+
+```bash
+gcc --version
+make
+make test
+ls -l estadistiques
+make clean
+```
+
+- `gcc --version`: muestra la versión del compilador.
+- `make`: compila el programa siguiendo el objetivo predeterminado.
+- `make test`: ejecuta el programa compilado.
+- `ls -l estadistiques`: comprueba que existe el ejecutable.
+- `make clean`: elimina el ejecutable generado.
+
+## 5. Evitar subir el binario
+Añade estas reglas a `.gitignore`. Si el archivo no existe, el siguiente comando lo crea; si ya existe, revisa su contenido antes de sustituirlo:
+
+```bash
+cat >> .gitignore <<'EOF'
 *.o
 estadistiques
+EOF
+cat .gitignore
 ```
-Así Git ignora objetos compilados y el ejecutable, pero sigue versionando el código fuente y el Makefile.
 
-## 4. Crear el workflow
-Guarda esto en `.github/workflows/compilar.yml`:
-```yaml
+- `cat >> .gitignore`: añade las dos reglas al final del archivo.
+- `*.o`: ignora archivos objeto.
+- `estadistiques`: ignora el ejecutable compilado.
+
+## 6. Crear el workflow
+Ejecuta el bloque en la raíz del repositorio:
+
+```bash
+cat > .github/workflows/compilar.yml <<'EOF'
 name: Compilar C
 on:
   push:
@@ -67,16 +122,34 @@ jobs:
           name: estadistiques
           path: estadistiques
           retention-days: 7
+EOF
+cat .github/workflows/compilar.yml
 ```
-El runner Ubuntu ya dispone de herramientas habituales de compilación. La subida de artefacto conserva el archivo al terminar el job, aunque esté ignorado por Git.
 
-## 5. Confirmar y verificar
+- `cat > ... <<'EOF'`: escribe el workflow en la ruta indicada.
+- `cat ...`: permite revisar el YAML antes de subirlo.
+- El artefacto conserva el ejecutable al terminar el job, aunque esté ignorado por Git.
+
+## 7. Confirmar y verificar
+
 ```bash
+git status
 git add estadistiques.c Makefile .gitignore .github/workflows/compilar.yml
+git diff --staged
 git commit -m "Añadir compilación y pruebas de C"
 git push
 ```
-En **Actions**, comprueba por separado que se detecta GCC, que `make` compila, que `make test` devuelve código cero y que el artefacto se puede descargar.
+
+- `git status`: revisa los cambios.
+- `git add ...`: prepara los cuatro archivos.
+- `git diff --staged`: revisa los cambios preparados.
+- `git commit ...`: crea el commit.
+- `git push`: sube los cambios a la rama configurada.
+
+En **Actions**, comprueba que GCC se detecta, que `make` compila, que `make test` termina correctamente y que el artefacto se puede descargar.
 
 ## Diagnóstico
-Un error de sintaxis detiene la compilación. Una tabulación incorrecta produce errores de Makefile. Si falla la subida, verifica que el nombre del archivo coincide con `path`. Puedes introducir un error controlado para ver el fallo y luego corregirlo. Si el enunciado pide un badge, añádelo al README usando la opción de estado del workflow.
+- Un error de sintaxis detiene la compilación.
+- Una tabulación incorrecta produce errores de Makefile.
+- Si falla la subida, verifica que el archivo generado coincide con `path`.
+- Si el enunciado pide un badge, añádelo al README usando la URL de estado del workflow.
