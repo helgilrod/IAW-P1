@@ -1,7 +1,9 @@
-# Práctica 6. Analizar JavaScript con Super-Linter
+# Práctica 6. Analizar JavaScript con Super-Linter en GitHub Actions
 
 ## Objetivo
-Añadir un workflow que ejecute Super-Linter al subir cambios a una rama concreta.
+Crear una rama de trabajo, añadir un workflow de GitHub Actions que ejecute Super-Linter cuando se suban cambios a esa rama y comprobar el resultado desde la pestaña Actions.
+
+> Mantén los nombres de rama, archivo de configuración y versiones que exija el enunciado. El ejemplo usa los nombres del material de esta práctica.
 
 ## 1. Comprobar el repositorio
 
@@ -14,53 +16,53 @@ git branch --show-current
 ```
 
 - `pwd`: muestra la carpeta actual.
-- `ls -la`: lista los archivos del proyecto.
-- `git status`: comprueba el estado de la copia local.
-- `git remote -v`: muestra el remoto configurado.
+- `ls -la`: lista los archivos.
+- `git status`: muestra los cambios pendientes.
+- `git remote -v`: comprueba el remoto configurado.
 - `git branch --show-current`: muestra la rama actual.
 
-## 2. Crear o cambiar a la rama
+## 2. Crear o cambiar a la rama requerida
 
-Si la rama no existe:
+Si la rama todavía no existe:
 
 ```bash
 git switch -c nodejs_linter_job
 ```
 
-Si ya existe localmente:
+Si ya existe:
 
 ```bash
 git switch nodejs_linter_job
 ```
 
-Comprueba la rama:
+Después verifica:
 
 ```bash
 git branch --show-current
 git status
 ```
 
-- `git switch -c nodejs_linter_job`: crea la rama y cambia a ella.
-- `git switch nodejs_linter_job`: cambia a la rama existente.
-- `git branch --show-current`: confirma el nombre de la rama actual.
-- `git status`: muestra si hay cambios pendientes.
+- `git switch -c`: crea la rama y cambia a ella.
+- `git switch`: cambia a una rama existente.
+- No crees otra rama si ya existe una con el nombre exigido.
 
-## 3. Comprobar la configuración de JavaScript
+## 3. Localizar los archivos JavaScript y su configuración
 
 ```bash
-find . -maxdepth 2 -type f
+find . -maxdepth 3 -type f
 test -f .eslintrc.json && echo "Configuración ESLint encontrada"
 mkdir -p .github/workflows
 ```
 
-- `find ...`: lista archivos para localizar el código JavaScript y la configuración.
-- `test -f .eslintrc.json ...`: comprueba si existe el archivo de configuración esperado por este ejemplo.
-- `mkdir -p .github/workflows`: crea la carpeta donde GitHub Actions busca los workflows.
+- `find`: lista archivos para localizar el JavaScript y los archivos de configuración.
+- `test -f .eslintrc.json`: comprueba si existe la configuración indicada en el ejemplo.
+- `mkdir -p .github/workflows`: crea la carpeta en la que GitHub Actions busca los workflows.
 
-Si el enunciado proporciona una configuración distinta, utiliza la ruta y el nombre exactos que indique el profesor.
+Si el enunciado proporciona otra ruta o archivo de configuración, usa ese nombre exacto.
 
 ## 4. Crear el workflow
-Guarda el archivo como `.github/workflows/main_workflow.yml`:
+
+Crea `.github/workflows/main_workflow.yml`:
 
 ```bash
 cat > .github/workflows/main_workflow.yml <<'EOF'
@@ -72,8 +74,9 @@ jobs:
   linter-execution:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Linter
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+      - name: Ejecutar Super-Linter
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: nodejs_example
@@ -85,35 +88,52 @@ EOF
 cat .github/workflows/main_workflow.yml
 ```
 
-- `cat > ... <<'EOF'`: crea el archivo con la configuración YAML.
-- `cat ...`: muestra el archivo para revisar su contenido.
-- `on.push.branches`: limita la ejecución a la rama `nodejs_linter_job`.
-- `runs-on`: selecciona la máquina donde se ejecuta el job.
-- `uses`: ejecuta acciones reutilizables.
-- `env`: define las variables de entorno para configurar el linter.
-- `GITHUB_TOKEN`: utiliza el token automático de GitHub Actions; no pegues contraseñas ni tokens privados en el archivo.
+- `name`: nombre visible del workflow.
+- `on.push.branches`: hace que se ejecute al subir cambios a `nodejs_linter_job).
+- `jobs`: agrupa los trabajos que debe realizar Actions.
+- `runs-on`: selecciona la máquina de ejecución.
+- `steps`: contiene las acciones que se ejecutan en orden.
+- `actions/checkout`: descarga el repositorio en la máquina.
+- `github/super-linter`: ejecuta el analizador de código.
+- `GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}`: usa el token automático de Actions; no escribas contraseñas ni tokens privados en el YAML.
+- `LINTER_RULES_PATH`: indica dónde están las reglas de configuración.
+- `JAVASCRIPT_ES_CONFIG_FILE`: indica el archivo de configuración de JavaScript.
+- `VALIDATE_JAVASCRIPT_ES: true`: activa la validación de JavaScript.
+- `cat ...`: permite revisar el YAML antes de subirlo.
 
-## 5. Confirmar y subir
+## 5. Revisar y subir el workflow
 
 ```bash
 git status
 git add .github/workflows/main_workflow.yml
+git status
 git diff --staged
 git commit -m "Añadir job de linter"
 git push -u origin nodejs_linter_job
 ```
 
-- `git status`: comprueba los cambios.
-- `git add ...`: prepara el workflow.
-- `git diff --staged`: revisa el contenido que se confirmará.
-- `git commit -m ...`: crea el commit.
+- `git status`: comprueba el estado del repositorio.
+- `git add`: prepara el archivo del workflow.
+- `git diff --staged`: muestra los cambios preparados.
+- `git commit`: guarda el workflow en un commit.
 - `git push -u origin nodejs_linter_job`: sube la rama y configura el seguimiento remoto.
 
-## 6. Revisar el resultado
-En GitHub abre **Actions**, entra en la ejecución del workflow y examina el log. Comprueba que el workflow se ha ejecutado en la rama correcta y que el archivo de configuración se encuentra en la ruta esperada.
+Si Git informa de que no existe `origin`, comprueba `git remote -v` y configura la URL real del repositorio siguiendo el enunciado.
 
-## Diagnóstico
-- Si el workflow no se inicia, revisa el nombre de la rama dentro de `on.push.branches`.
-- Si no encuentra las reglas, comprueba `LINTER_RULES_PATH` y `JAVASCRIPT_ES_CONFIG_FILE`.
-- Si falla el linter, lee el log para localizar el archivo y la regla que produce el error.
-- La versión v4 de Super-Linter y sus variables se mantienen como parte del material de esta práctica; si el profesor exige esas versiones, no las cambies por tu cuenta.
+## 6. Ejecutar y revisar el workflow
+
+1. Abre el repositorio en GitHub.
+2. Entra en **Actions**.
+3. Selecciona `main_workflow).
+4. Abre la ejecución más reciente.
+5. Entra en el job `linter-execution`.
+6. Comprueba si el paso de Super-Linter terminó correctamente.
+7. Si falla, abre el log para ver qué archivo o regla provoca el error.
+
+## 7. Diagnóstico
+
+- **El workflow no se ejecuta:** revisa que el archivo esté en `.github/workflows/`, que se haya hecho push y que el nombre de la rama coincida.
+- **No encuentra la configuración:** comprueba la ruta de `.eslintrc.json` y `LINTER_RULES_PATH`.
+- **Falla la validación:** lee el log; corrige el código o la configuración indicada y vuelve a hacer commit y push.
+- **No aparece el job:** valida la indentación YAML y revisa que el nombre del archivo termine en `.yml` o `.yaml`.
+- **La práctica exige otra versión:** conserva la versión exacta del enunciado en lugar de cambiarla por esta de ejemplo.
