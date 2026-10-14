@@ -10,7 +10,7 @@ Apuntes y prácticas paso a paso para preparar el examen: terminal, GitHub Actio
 - [Pages y despliegues](teoria/05-pages-despliegues.md)
 
 ## Prácticas
-Consulta el [índice de prácticas resueltas](practicas/README.md), con las actividades de Git inicial, Pages, Python, C, GitHub Flow, linter, Jest, matrices, variables, condiciones, React/Surge, Telegram, meme en README, HTML/Git Flow, blog Next.js y métricas.
+Consulta el [índice de prácticas resueltas](practicas/README.md), con las seis prácticas que entran: Git inicial, Pages, Python, C, GitHub Flow y linter.
 
 ## Orden de estudio
 1. Terminal y .gitignore.
