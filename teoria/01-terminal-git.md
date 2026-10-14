@@ -249,15 +249,15 @@ git push
 ```
 
 - `git remote -v`: muestra los repositorios remotos configurados y sus URL.
-- `git remote add origin URL_DEL_REPOSITORIO`: registra un remoto llamado `origin); sustituye la URL por la real.
+- `git remote add origin URL_DEL_REPOSITORIO`: registra un remoto llamado `origin`; sustituye la URL por la real.
 - `git remote set-url origin URL_DEL_REPOSITORIO`: cambia la URL de un remoto que ya existe.
 - `git clone URL_DEL_REPOSITORIO`: descarga el repositorio remoto y crea una carpeta de trabajo con su historial.
 - `git fetch`: descarga información y commits remotos sin integrarlos automáticamente en la rama actual.
 - `git pull`: descarga e integra cambios del remoto seguido por la rama actual.
-- `git push -u origin main`: sube `main) a `origin` y configura el seguimiento para futuros comandos.
+- `git push -u origin main`: sube `main` a `origin` y configura el seguimiento para futuros comandos.
 - `git push`: sube los commits de la rama actual al remoto configurado.
 
-Si aparece `remote origin already exists`, consulta `git remote -v) o corrige la URL con `git remote set-url`; no repitas `git remote add`.
+Si aparece `remote origin already exists`, consulta `git remote -v` o corrige la URL con `git remote set-url`; no repitas `git remote add`.
 
 ## 8. Etiquetas (tags)
 
