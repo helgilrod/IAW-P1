@@ -1,42 +1,48 @@
-# Práctica 4. Compilar un programa C con Makefile y GitHub Actions
+# Práctica 4. Compilar un programa C con Makefile y guardar el artefacto
 
 ## Objetivo
-Automatizar la compilación de C, ejecutar una prueba sencilla y guardar el binario generado como artefacto descargable.
+Crear un programa C, compilarlo con un Makefile, ejecutar una prueba y automatizar la compilación con GitHub Actions. El binario se guardará como artefacto.
 
-## 1. Comprobar la carpeta de trabajo
+## 1. Comprobar el proyecto
+
+Desde la raíz del repositorio:
 
 ```bash
 pwd
 ls -la
+git status
 mkdir -p .github/workflows
 ```
 
-- `pwd`: muestra la carpeta actual.
-- `ls -la`: permite revisar el contenido del proyecto.
-- `mkdir -p .github/workflows`: crea la ruta para el workflow.
+- `pwd`: muestra la ruta actual.
+- `ls -la`: lista los archivos del proyecto.
+- `git status`: muestra la rama y los cambios pendientes.
+- `mkdir -p .github/workflows`: crea la carpeta de workflows.
 
 ## 2. Crear el programa C
-Crea `estadistiques.c` con este comando:
 
 ```bash
 cat > estadistiques.c <<'EOF'
 #include <stdio.h>
 
 int main(void) {
-    printf("Programa estadistiques\\n");
+    printf("Programa estadistiques\n");
     return 0;
 }
 EOF
 cat estadistiques.c
 ```
 
-- `cat > estadistiques.c`: crea el archivo con el código.
-- `cat estadistiques.c`: comprueba el contenido guardado.
-- `stdio.h` permite usar `printf`.
-- `main` es el punto de entrada del programa y devolver `0` indica que terminó correctamente.
+- `cat > estadistiques.c`: crea el archivo con el código C.
+- `#include <stdio.h>`: permite utilizar funciones de entrada/salida como `printf`.
+- `main`: es el punto de entrada del programa.
+- `printf`: muestra el texto por pantalla.
+- `return 0`: indica que el programa ha terminado correctamente.
+- `cat estadistiques.c`: comprueba que el código se ha guardado.
 
 ## 3. Crear el Makefile
-El archivo debe llamarse exactamente `Makefile`:
+
+El archivo se debe llamar exactamente `Makefile`, respetando la M mayúscula. Las líneas de comandos debajo de cada regla deben empezar con una tabulación real.
 
 ```bash
 cat > Makefile <<'EOF'
@@ -57,14 +63,18 @@ EOF
 cat -te Makefile
 ```
 
-- `cat > Makefile`: crea el archivo.
-- `cat -te Makefile`: permite distinguir las tabulaciones; las líneas de comandos bajo cada regla deben empezar con una tabulación real.
-- `all` es el objetivo predeterminado.
-- `test` ejecuta el programa.
-- `clean` elimina el binario.
+- `CC = gcc`: define el compilador.
+- `CFLAGS`: activa avisos y trata los avisos como errores.
+- `all`: objetivo predeterminado.
+- `estadistiques: estadistiques.c`: indica que el ejecutable depende del código fuente.
+- La línea `$(CC)...` compila el archivo y genera el ejecutable.
+- `test`: ejecuta el programa compilado.
+- `clean`: elimina el ejecutable generado.
+- `cat -te`: permite detectar tabulaciones; las órdenes de Makefile deben empezar por tabulación, no por espacios.
 
-## 4. Probar la compilación local
-En un sistema con GCC y Make instalados:
+## 4. Probar localmente
+
+En Linux con GCC y Make instalados:
 
 ```bash
 gcc --version
@@ -74,14 +84,17 @@ ls -l estadistiques
 make clean
 ```
 
-- `gcc --version`: muestra la versión del compilador.
-- `make`: compila el programa siguiendo el objetivo predeterminado.
-- `make test`: ejecuta el programa compilado.
-- `ls -l estadistiques`: comprueba que existe el ejecutable.
-- `make clean`: elimina el ejecutable generado.
+- `gcc --version`: muestra la versión de GCC.
+- `make`: ejecuta el objetivo predeterminado y compila.
+- `make test`: ejecuta el programa; debería imprimir `Programa estadistiques`.
+- `ls -l estadistiques`: comprueba que el ejecutable se creó.
+- `make clean`: borra el ejecutable para limpiar el proyecto.
 
-## 5. Evitar subir el binario
-Añade estas reglas a `.gitignore`. Si el archivo no existe, el siguiente comando lo crea; si ya existe, revisa su contenido antes de sustituirlo:
+Si `make` o `gcc` no están instalados en Debian/Ubuntu, el profesor puede pedir instalarlos con `sudo apt update` y `sudo apt install build-essential`.
+
+## 5. Crear o actualizar .gitignore
+
+Si `.gitignore` ya existe, revisa su contenido antes de modificarlo. Para añadir las reglas al final:
 
 ```bash
 cat >> .gitignore <<'EOF'
@@ -91,12 +104,12 @@ EOF
 cat .gitignore
 ```
 
-- `cat >> .gitignore`: añade las dos reglas al final del archivo.
+- `cat >>`: añade contenido sin borrar las reglas existentes.
 - `*.o`: ignora archivos objeto.
-- `estadistiques`: ignora el ejecutable compilado.
+- `estadistiques`: evita que el ejecutable local se suba al repositorio.
+- El binario podrá subirse como artefacto desde Actions aunque Git lo ignore.
 
-## 6. Crear el workflow
-Ejecuta el bloque en la raíz del repositorio:
+## 6. Crear el workflow de GitHub Actions
 
 ```bash
 cat > .github/workflows/compilar.yml <<'EOF'
@@ -105,51 +118,67 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+
 jobs:
   compilar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Versión de GCC
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+      - name: Mostrar versión de GCC
         run: gcc --version
       - name: Compilar
         run: make
-      - name: Prueba básica
+      - name: Ejecutar prueba
         run: make test
-      - name: Subir ejecutable
+      - name: Guardar ejecutable como artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: estadistiques
+          name: estadistiques-linux
           path: estadistiques
           retention-days: 7
 EOF
 cat .github/workflows/compilar.yml
 ```
 
-- `cat > ... <<'EOF'`: escribe el workflow en la ruta indicada.
-- `cat ...`: permite revisar el YAML antes de subirlo.
-- El artefacto conserva el ejecutable al terminar el job, aunque esté ignorado por Git.
+- `on.push.branches`: ejecuta el workflow al hacer push a `main`.
+- `workflow_dispatch`: permite iniciarlo manualmente.
+- `runs-on: ubuntu-latest`: ejecuta el job en Linux.
+- `actions/checkout`: descarga el repositorio.
+- `run: make`: compila usando el Makefile.
+- `run: make test`: comprueba que el programa se ejecuta.
+- `actions/upload-artifact`: permite descargar el ejecutable al acabar el workflow.
+- `retention-days: 7`: conserva el artefacto siete días.
 
-## 7. Confirmar y verificar
+## 7. Revisar y subir los archivos
 
 ```bash
 git status
 git add estadistiques.c Makefile .gitignore .github/workflows/compilar.yml
+git status
 git diff --staged
-git commit -m "Añadir compilación y pruebas de C"
+git commit -m "Añadir compilacion y pruebas de C"
 git push
 ```
 
-- `git status`: revisa los cambios.
-- `git add ...`: prepara los cuatro archivos.
-- `git diff --staged`: revisa los cambios preparados.
-- `git commit ...`: crea el commit.
+- Primer `git status`: muestra los cambios.
+- `git add ...`: prepara los archivos de código, configuración y workflow.
+- Segundo `git status`: confirma qué se va a incluir en el commit.
+- `git diff --staged`: revisa los cambios de texto preparados.
+- `git commit`: guarda la versión.
 - `git push`: sube los cambios a la rama configurada.
 
-En **Actions**, comprueba que GCC se detecta, que `make` compila, que `make test` termina correctamente y que el artefacto se puede descargar.
+## 8. Verificar el resultado
 
-## Diagnóstico
-- Un error de sintaxis detiene la compilación.
-- Una tabulación incorrecta produce errores de Makefile.
-- Si falla la subida, verifica que el archivo generado coincide con `path`.
-- Si el enunciado pide un badge, añádelo al README usando la URL de estado del workflow.
+1. En GitHub, abre **Actions**.
+2. Selecciona la ejecución de **Compilar C**.
+3. Comprueba que compilar y ejecutar la prueba terminan correctamente.
+4. Descarga el artefacto `estadistiques-linux`.
+5. Si falla, abre el log del paso rojo y revisa el error exacto.
+
+## Errores frecuentes
+
+- **Missing separator:** una orden del Makefile empieza con espacios en lugar de tabulación.
+- **No such file:** el nombre del fuente o el ejecutable no coincide.
+- **No aparece el artefacto:** el nombre de `path` no coincide con el binario generado.
+- **No se inicia Actions:** el archivo debe estar en `.github/workflows/` y los cambios deben haberse subido a la rama indicada.
