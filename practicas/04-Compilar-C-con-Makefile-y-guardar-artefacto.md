@@ -9,7 +9,7 @@ En la raíz crea `estadistiques.c`:
 #include <stdio.h>
 
 int main(void) {
-    printf("Programa estadistiques\\n");
+    printf("Programa estadistiques\n");
     return 0;
 }
 ```
@@ -41,6 +41,14 @@ En `.gitignore` añade:
 estadistiques
 ```
 Así Git ignora objetos compilados y el ejecutable, pero sigue versionando el código fuente y el Makefile.
+
+Compruébalo después de compilar:
+```bash
+make
+git check-ignore -v estadistiques
+git status
+```
+`git check-ignore -v` indica la línea del `.gitignore` que ignora el binario; si no imprime nada, no se está ignorando. En `git status` no debe aparecer `estadistiques`.
 
 ## 4. Crear el workflow
 Guarda esto en `.github/workflows/compilar.yml`:

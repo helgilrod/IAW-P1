@@ -32,6 +32,8 @@ git push -u origin feature_nombre_alumno
 ```
 `git diff` ayuda a revisar las modificaciones; `git add` prepara los archivos; `commit` crea una versión y `push` publica la rama.
 
+Por HTTPS, GitHub no acepta la contraseña de la cuenta: usa un token personal como contraseña o `gh auth login`. Si el push falla, consulta los [errores típicos](../teoria/06-repos-de-cero.md#errores-típicos).
+
 ## 5. Abrir un Pull Request
 En GitHub abre **Pull requests → New pull request**. Selecciona la rama de la funcionalidad como origen (*compare*) y `main` como destino (*base*), salvo que el enunciado diga otra cosa. Describe el cambio y vincula la issue escribiendo, por ejemplo, `Closes #12` con el número real. Solicita la revisión requerida y corrige las observaciones antes del merge.
 

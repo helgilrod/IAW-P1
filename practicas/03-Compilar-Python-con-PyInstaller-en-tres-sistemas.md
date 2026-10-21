@@ -62,5 +62,29 @@ Si el enunciado limita la ejecución a una rama concreta, especifica esa rama de
 ## 4. Revisar la ejecución
 En GitHub abre **Actions** y entra en la ejecución más reciente. Los tres jobs deben aparecer y terminar correctamente. PyInstaller suele escribir el resultado en `dist/`, pero en este ejemplo el ejecutable queda en el runner temporal: para conservarlo después de acabar el job, hay que añadir un paso `actions/upload-artifact` con la ruta correcta.
 
+## 5. Variantes habituales
+**Una versión de Python distinta en cada job.** Cambia solo `python-version` en cada uno y ponla siempre entre comillas (`'3.10'`; sin comillas, YAML lo lee como el número 3.1).
+
+**Ejecutar tests además de compilar, y conservar el ejecutable.** Así quedan los pasos de un job (el de Linux); en los otros dos cambia el `name` del artefacto para que no choquen:
+```yaml
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest -v
+      - run: pip install pyinstaller
+      - run: pyinstaller --onefile comprova_desplegaments.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ejecutable-linux
+          path: dist/
+```
+Si algún test falla, el job sale en rojo y no se compila.
+
+**Matriz.** Sustituye los tres jobs por uno solo con `strategy.matrix`. Úsala solo si el enunciado no exige tres jobs con nombres concretos.
+
+Más detalle en [Tests de Python en GitHub Actions](../teoria/07-tests-python-actions.md).
+
 ## Ideas importantes y errores
 Un ejecutable creado en Linux no sustituye al de Windows o macOS: cada sistema necesita su propio build. Si falla, comprueba el nombre del script, la versión de Python, la instalación de dependencias y el log del job. Añade pruebas del ejecutable solo con comandos adecuados para cada sistema operativo.

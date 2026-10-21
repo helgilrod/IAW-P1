@@ -58,11 +58,33 @@ Primero crea un cambio de prueba y un commit:
 echo "Línia de prova" >> README.md
 git add README.md
 git commit -m "Prova de canvi"
-``
+```
 Ahora prueba cada modalidad por separado, comprobando `git status` después de cada una. Si quieres observar los tres resultados, recrea el commit de prueba entre ejercicios.
 - `git reset --soft HEAD~1`: quita el último commit, conserva los cambios en staging.
 - `git reset --mixed HEAD~1`: quita el commit y deja los cambios en el directorio de trabajo, fuera del staging. Es el comportamiento predeterminado.
 - `git reset --hard HEAD~1`: mueve la rama y descarta los cambios afectados. **Úsalo solo en este repositorio de prueba**: puede destruir trabajo.
+
+## 7. Guardar el historial en un fichero
+```bash
+git log --oneline > historial.txt
+cat historial.txt
+git add historial.txt
+git commit -m "Guardar historial"
+```
+`>` envía la salida del comando al fichero en vez de a la pantalla; es más seguro que copiar y pegar. El commit en el que añades `historial.txt` no aparece dentro, porque el fichero se creó antes.
+
+## 8. Subir el repositorio a GitHub
+1. En GitHub: **+** → **New repository**, con el mismo nombre que la carpeta, público y **sin** README (si GitHub crea un commit inicial, tu primer push se rechaza).
+2. Copia la URL HTTPS del botón **Code** y conecta el repositorio local:
+```bash
+git remote add origin https://github.com/TU_USUARIO/activitatsPrimeraClaseDAW.git
+git remote -v
+git push -u origin main
+```
+- `-u` deja configurado el seguimiento; los siguientes envíos son solo `git push`.
+- Como contraseña, GitHub pide un token personal, no la contraseña de la cuenta.
+- Si sale `rejected ... (fetch first)`, el remoto tiene commits que tú no: `git pull --rebase origin main` y vuelve a hacer push.
+- Más errores típicos y sus soluciones, en [Repositorios de cero](../teoria/06-repos-de-cero.md#errores-típicos).
 
 ## Comprobación final
 Ejecuta `git status` y `git log --oneline`. Debes poder explicar qué está en el directorio de trabajo, qué está preparado y qué forma parte del historial.

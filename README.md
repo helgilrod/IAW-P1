@@ -12,7 +12,7 @@ Apuntes y prácticas paso a paso para preparar el examen: terminal, GitHub Actio
 - [Tests de Python en GitHub Actions](teoria/07-tests-python-actions.md)
 
 ## Prácticas
-Consulta el [índice de prácticas resueltas](practicas/README.md), con las seis prácticas que entran: Git inicial, Pages, Python, C, GitHub Flow y linter.
+Consulta el [índice de prácticas resueltas](practicas/README.md), con las cinco prácticas que entran: Git inicial, Pages, Python, C y GitHub Flow.
 
 ## Orden de estudio
 1. Terminal y .gitignore.

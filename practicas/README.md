@@ -9,7 +9,6 @@ Aquí están las prácticas que entran en el temario. Están ordenadas por núme
 3. [Compilar Python con PyInstaller para distintos sistemas](03-Compilar-Python-con-PyInstaller-en-tres-sistemas.md)
 4. [Compilar un programa C con Makefile y guardar el artefacto](04-Compilar-C-con-Makefile-y-guardar-artefacto.md)
 5. [Trabajar con issues, ramas, pull requests y GitHub Pages](05-Trabajar-con-issues-ramas-pull-requests-y-Pages.md)
-6. [Analizar código JavaScript con Super-Linter](06-Analizar-JavaScript-con-Super-Linter.md)
 
 ## Cómo estudiar
 1. Lee el objetivo de la práctica.
