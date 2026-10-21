@@ -66,6 +66,8 @@ Ahora prueba cada modalidad por separado, comprobando `git status` después de c
 - `git reset --mixed HEAD~1`: quita el commit y deja los cambios en el directorio de trabajo, fuera del staging. Es el comportamiento predeterminado.
 - `git reset --hard HEAD~1`: mueve la rama y descarta los cambios afectados. **Úsalo solo en este repositorio de prueba**: puede destruir trabajo.
 
+Si el commit ya está subido a GitHub, no uses reset: `git revert HEAD` crea un commit nuevo que lo deshace sin tocar el historial, y después basta con `git push`. Está explicado en [Terminal y Git](../teoria/01-terminal-git.md#deshacer-un-commit-ya-subido-git-revert).
+
 ## 7. Guardar el historial en un fichero
 ```bash
 git log --oneline > historial.txt

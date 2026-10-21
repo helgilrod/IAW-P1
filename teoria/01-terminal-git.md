@@ -76,6 +76,27 @@ git reset --hard HEAD~1
 - --mixed elimina el commit y deja cambios fuera del staging.
 - --hard elimina el commit y descarta cambios del staging y directorio de trabajo. Es destructivo.
 - HEAD~1 representa el commit anterior.
+- reset solo es para commits que **no** has subido. Para uno que ya está en GitHub, usa revert.
+
+## Deshacer un commit ya subido: git revert
+~~~bash
+git log --oneline
+git revert HEAD
+git revert a1b2c3d
+git revert --no-edit HEAD
+git push
+~~~
+- revert crea un commit **nuevo** que hace lo contrario del commit indicado. El original sigue en el historial y el nuevo se llama Revert "mensaje original".
+- git revert HEAD deshace el último commit; con un hash (lo sacas de git log --oneline), deshace ese commit concreto aunque haya otros después.
+- Abre el editor con el mensaje ya escrito: en nano guarda con Ctrl+O, Enter y sal con Ctrl+X. Con --no-edit lo acepta sin abrir el editor.
+- Como no borra nada del historial, después basta con un git push normal.
+- Si el cambio choca con commits posteriores, hay conflicto: se resuelve como en un merge (editar el fichero, git add y git revert --continue) o se cancela con git revert --abort.
+
+| | reset | revert |
+|---|---|---|
+| Qué hace | Mueve la rama atrás: el commit desaparece | Crea un commit nuevo que deshace los cambios |
+| Historial | Se reescribe | Se conserva |
+| Cuándo | Commits que solo están en tu ordenador | Commits ya subidos a GitHub |
 
 ## Remotos
 ~~~bash
@@ -96,6 +117,7 @@ remote -v muestra remotos; remote add origin registra uno; push -u publica main 
 | Author identity unknown | Falta tu nombre o tu correo | git config --global user.name y user.email |
 | not a git repository | No estás en la carpeta del repositorio | cd a la carpeta; ls -a debe mostrar .git |
 | Ha entrado un fichero que no tocaba | git add . lo mete todo | git restore --staged fichero antes del commit |
+| rejected ... (non-fast-forward) después de un reset | Has hecho reset de un commit que ya estaba en GitHub | No fuerces el push: vuelve a como está GitHub con git reset --hard origin/main (pierdes lo que no tenga commit) y deshazlo con git revert |
 
 Comprueba la rama antes del push y no uses reset --hard sin revisar antes git status.
 
@@ -105,6 +127,7 @@ Comprueba la rama antes del push y no uses reset --hard sin revisar antes git st
 - [ ] Sacar un fichero del staging sin perder los cambios.
 - [ ] Ver el historial con hash, autor y fecha.
 - [ ] Explicar la diferencia entre reset --soft, --mixed y --hard.
+- [ ] Deshacer con git revert un commit ya subido y explicar por qué no se usa reset.
 
 ---
 [Índice](../README.md) · [02 .gitignore →](02-gitignore.md)

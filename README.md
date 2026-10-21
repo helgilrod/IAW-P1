@@ -5,7 +5,7 @@ Apuntes y prácticas paso a paso para preparar el examen.
 ## Teoría, en orden de estudio
 | # | Tema | Qué aprendes |
 |---|---|---|
-| 1 | [Terminal y Git](teoria/01-terminal-git.md) | Las tres zonas de Git, add, commit, log y reset |
+| 1 | [Terminal y Git](teoria/01-terminal-git.md) | Las tres zonas de Git, add, commit, log, reset y revert |
 | 2 | [.gitignore](teoria/02-gitignore.md) | Ignorar ficheros y carpetas, y comprobarlo |
 | 3 | [Repositorios de cero](teoria/03-repos-de-cero.md) | Crear en GitHub, conectar, push, ZIP, clonar y errores típicos |
 | 4 | [Ramas, merge y tags](teoria/04-ramas-merge-tags.md) | Ramas, merge, conflictos y versiones con tags |
