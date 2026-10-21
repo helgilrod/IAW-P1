@@ -128,3 +128,6 @@ Si haces git init en una carpeta que está dentro de otro repositorio, quedan do
 - [ ] Hacer un commit con un solo fichero y un mensaje exacto.
 - [ ] Hacer el primer push y resolver un rechazo por fetch first.
 - [ ] Descargar un ZIP, descomprimirlo y entrar en la carpeta.
+
+---
+[← 02 .gitignore](02-gitignore.md) · [Índice](../README.md) · [04 Ramas, merge y tags →](04-ramas-merge-tags.md)

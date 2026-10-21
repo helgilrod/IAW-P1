@@ -3,6 +3,8 @@
 ## Objetivo
 Subir una página estática a GitHub y publicarla con una dirección del tipo `https://TU_USUARIO.github.io/`.
 
+**Teoría:** [Repositorios de cero](../teoria/03-repos-de-cero.md) · [Pages y despliegues](../teoria/08-pages-despliegues.md)
+
 ## 1. Crear el repositorio correcto
 En GitHub crea un repositorio público llamado exactamente `TU_USUARIO.github.io`, sustituyendo el texto por tu nombre de usuario. Este formato identifica un sitio personal y solo puede haber uno por cuenta: si ya existe y quieres empezar de cero, bórralo en **Settings → General → Danger Zone → Delete this repository** y vuelve a crearlo. Si vas a subir los archivos desde la terminal, créalo **sin** README.
 
@@ -55,3 +57,6 @@ Cada push a `main` vuelve a publicar la web. Si el repositorio ya está en tu or
 
 ## Errores frecuentes
 Si no aparece la web, revisa el nombre exacto del repositorio, la rama y carpeta seleccionadas en Pages y el estado del despliegue. Si aparece HTML sin diseño, comprueba la ruta del CSS. Los cambios pueden tardar un poco en publicarse.
+
+---
+[← Práctica 1](01-Git-repositorio-commits-y-reset.md) · [Índice de prácticas](README.md) · [Práctica 3 →](03-Compilar-Python-con-PyInstaller-en-tres-sistemas.md)

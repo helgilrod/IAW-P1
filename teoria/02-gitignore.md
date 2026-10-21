@@ -54,3 +54,11 @@ git status --ignored
 - Haz primero el commit del .gitignore y después el de los demás ficheros: así nada de lo ignorado llega a entrar.
 
 Importante: .gitignore no deja de seguir un archivo ya controlado. Para quitarlo del índice sin borrarlo del disco: git rm --cached archivo; después crea un commit. No guardes contraseñas, tokens ni claves privadas en el repositorio.
+
+## Comprueba que sabes
+- [ ] Escribir un .gitignore que ignore una carpeta, una extensión y un fichero concreto.
+- [ ] Comprobar con git check-ignore -v por qué se ignora un fichero.
+- [ ] Dejar de seguir un fichero ya subido sin borrarlo del disco.
+
+---
+[← 01 Terminal y Git](01-terminal-git.md) · [Índice](../README.md) · [03 Repositorios de cero →](03-repos-de-cero.md)

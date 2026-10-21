@@ -1,26 +1,25 @@
 # IAW — Git, GitHub Actions y GitHub Pages
 
-Apuntes y prácticas paso a paso para preparar el examen: terminal, GitHub Actions con YAML, .gitignore y GitHub Pages/despliegues.
+Apuntes y prácticas paso a paso para preparar el examen.
 
-## Teoría
-- [Terminal y Git](teoria/01-terminal-git.md)
-- [.gitignore](teoria/02-gitignore.md)
-- [GitHub Actions y YAML](teoria/03-actions-yaml.md)
-- [Ejemplos de workflows](teoria/04-ejemplos-actions.md)
-- [Pages y despliegues](teoria/05-pages-despliegues.md)
-- [Repositorios de cero: GitHub web + terminal](teoria/06-repos-de-cero.md)
-- [Tests de Python en GitHub Actions](teoria/07-tests-python-actions.md)
-- [Ramas, merge y tags](teoria/08-ramas-merge-tags.md)
+## Teoría, en orden de estudio
+| # | Tema | Qué aprendes |
+|---|---|---|
+| 1 | [Terminal y Git](teoria/01-terminal-git.md) | Las tres zonas de Git, add, commit, log y reset |
+| 2 | [.gitignore](teoria/02-gitignore.md) | Ignorar ficheros y carpetas, y comprobarlo |
+| 3 | [Repositorios de cero](teoria/03-repos-de-cero.md) | Crear en GitHub, conectar, push, ZIP, clonar y errores típicos |
+| 4 | [Ramas, merge y tags](teoria/04-ramas-merge-tags.md) | Ramas, merge, conflictos y versiones con tags |
+| 5 | [GitHub Actions y YAML](teoria/05-actions-yaml.md) | on, jobs, steps, needs, if, matrices, secretos y artefactos |
+| 6 | [Tests de Python en Actions](teoria/06-tests-python-actions.md) | unittest en tres sistemas con versiones distintas |
+| 7 | [Ejemplos de workflows](teoria/07-ejemplos-actions.md) | C con Make, PyInstaller, Jest, variables y build |
+| 8 | [Pages y despliegues](teoria/08-pages-despliegues.md) | Web personal, /docs, build, artifact y deploy |
 
-## Prácticas
-Consulta el [índice de prácticas resueltas](practicas/README.md), con las cinco prácticas que entran: Git inicial, Pages, Python, C y GitHub Flow.
+## Prácticas resueltas
+Las cinco prácticas que entran, con la teoría que necesita cada una: [índice de prácticas](practicas/README.md).
 
-## Orden de estudio
-1. Terminal y .gitignore.
-2. Repositorios de cero: crear en GitHub, conectar, commit y push.
-3. Ramas, merge, conflictos y tags.
-4. Estructura YAML: on, jobs, runs-on, steps, uses y run.
-5. Tests de Python en varios sistemas, dependencias, condiciones, matrices y artefactos.
-6. Pages y despliegues.
+## Cómo estudiar
+1. Lee los temas en orden, del 1 al 8. Al final de cada uno, repasa la lista «Comprueba que sabes».
+2. Después haz las prácticas. Cada una indica arriba qué temas necesita.
+3. Respeta los nombres de rama, los mensajes de commit y las versiones del enunciado.
 
-Respeta los nombres de rama y versiones del enunciado. Nunca publiques tokens ni claves.
+Nunca publiques tokens ni claves.

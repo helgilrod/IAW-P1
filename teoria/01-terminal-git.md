@@ -21,16 +21,42 @@ git config --global core.editor nano
 git config --global --list
 ~~~
 
+## Las tres zonas de Git
+| Zona | Qué hay | Comando que lo pasa a la siguiente |
+|---|---|---|
+| Directorio de trabajo | Los ficheros tal como los editas | git add |
+| Staging (área de preparación) | Lo que irá en el próximo commit | git commit |
+| Historial | Los commits guardados en tu ordenador | git push (los sube a GitHub) |
+
+Como una foto: add coloca a la gente, commit hace la foto y push la envía.
+
+## git add: elegir qué entra en el commit
+~~~bash
+git add notas.md
+git add .
+git add -A
+git restore --staged notas.md
+~~~
+- git add notas.md prepara solo ese fichero.
+- git add . prepara todo lo que ha cambiado en la carpeta actual y sus subcarpetas: ficheros nuevos, modificados y borrados. Deja fuera lo que diga el .gitignore.
+- El punto significa «la carpeta en la que estoy»: dentro de una subcarpeta, solo añade esa. git add -A añade todo el repositorio, estés donde estés.
+- git add no guarda nada en el historial (eso lo hace commit) ni sube nada a GitHub (eso lo hace push).
+- Si el enunciado pide un commit con un solo fichero, nómbralo en vez de usar el punto.
+- git restore --staged notas.md lo saca del staging sin tocar el fichero.
+
 ## Ciclo de trabajo
 ~~~bash
-git add README.md
+git status
+git add .
+git status
 git diff --staged
 git commit -m "Afegit fitxer Readme"
 git log --oneline
 ~~~
-git add prepara cambios; git commit crea un commit; git diff muestra cambios no preparados; git diff --staged muestra cambios preparados.
-Quitar del staging sin borrar: git restore --staged README.md.
-Descartar cambios locales sin commit: git restore README.md (puede perder trabajo).
+- git status: en rojo lo que ha cambiado y no está preparado; en verde lo que entra en el commit. Míralo antes y después de git add.
+- git diff muestra los cambios no preparados; git diff --staged, los preparados.
+- git commit -m guarda lo preparado en el historial con ese mensaje.
+- Descartar cambios locales sin commit: git restore README.md. Los cambios se pierden.
 
 ## Historial
 ~~~bash
@@ -61,7 +87,24 @@ git clone URL_DEL_REPOSITORIO
 git pull
 git push
 ~~~
-remote -v muestra remotos; remote add origin registra uno; push -u publica main y configura seguimiento; clone descarga repositorio; pull descarga e integra cambios; push sube commits.
+remote -v muestra remotos; remote add origin registra uno; push -u publica main y configura seguimiento; clone descarga repositorio; pull descarga e integra cambios; push sube commits. Paso a paso, en [Repositorios de cero](03-repos-de-cero.md).
 
 ## Errores típicos
-No olvidar git add; comprobar la rama antes del push; distinguir staging y directorio de trabajo; no usar reset --hard sin revisar cambios.
+| Mensaje | Causa | Solución |
+|---|---|---|
+| no changes added to commit | Has hecho commit sin git add | git add y vuelve a hacer el commit |
+| Author identity unknown | Falta tu nombre o tu correo | git config --global user.name y user.email |
+| not a git repository | No estás en la carpeta del repositorio | cd a la carpeta; ls -a debe mostrar .git |
+| Ha entrado un fichero que no tocaba | git add . lo mete todo | git restore --staged fichero antes del commit |
+
+Comprueba la rama antes del push y no uses reset --hard sin revisar antes git status.
+
+## Comprueba que sabes
+- [ ] Explicar las tres zonas y qué comando pasa de una a otra.
+- [ ] Preparar un solo fichero y, después, todos con git add .
+- [ ] Sacar un fichero del staging sin perder los cambios.
+- [ ] Ver el historial con hash, autor y fecha.
+- [ ] Explicar la diferencia entre reset --soft, --mixed y --hard.
+
+---
+[Índice](../README.md) · [02 .gitignore →](02-gitignore.md)

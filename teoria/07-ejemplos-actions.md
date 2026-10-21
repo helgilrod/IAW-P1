@@ -1,5 +1,7 @@
 # Ejemplos de workflows
 
+Plantillas listas para adaptar: cambia nombres, ramas y versiones por los del enunciado.
+
 ## C con Make
 ~~~yaml
 name: Compilar programa C
@@ -122,3 +124,6 @@ jobs:
     path: dist/
 ~~~
 La carpeta de salida depende del proyecto; comprueba que coincide con la ruta real.
+
+---
+[← 06 Tests de Python en Actions](06-tests-python-actions.md) · [Índice](../README.md) · [08 Pages y despliegues →](08-pages-despliegues.md)

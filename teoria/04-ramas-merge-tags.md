@@ -124,3 +124,6 @@ jobs:
 - [ ] Crear un tag anotado en el commit actual y otro en un commit antiguo.
 - [ ] Subir un tag a GitHub y borrarlo.
 - [ ] Escribir un workflow que se active al subir un tag v*.
+
+---
+[← 03 Repositorios de cero](03-repos-de-cero.md) · [Índice](../README.md) · [05 GitHub Actions y YAML →](05-actions-yaml.md)

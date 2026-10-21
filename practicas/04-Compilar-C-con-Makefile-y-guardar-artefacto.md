@@ -3,6 +3,8 @@
 ## Objetivo
 Automatizar la compilación de C, ejecutar una prueba sencilla y guardar el binario generado como artefacto descargable.
 
+**Teoría:** [.gitignore](../teoria/02-gitignore.md) · [GitHub Actions y YAML](../teoria/05-actions-yaml.md) · [Ejemplos de workflows](../teoria/07-ejemplos-actions.md)
+
 ## 1. Crear el programa
 En la raíz crea `estadistiques.c`:
 ```c
@@ -88,3 +90,6 @@ En **Actions**, comprueba por separado que se detecta GCC, que `make` compila, q
 
 ## Diagnóstico
 Un error de sintaxis detiene la compilación. Una tabulación incorrecta produce errores de Makefile. Si falla la subida, verifica que el nombre del archivo coincide con `path`. Puedes introducir un error controlado para ver el fallo y luego corregirlo. Si el enunciado pide un badge, añádelo al README usando la opción de estado del workflow.
+
+---
+[← Práctica 3](03-Compilar-Python-con-PyInstaller-en-tres-sistemas.md) · [Índice de prácticas](README.md) · [Práctica 5 →](05-Trabajar-con-issues-ramas-pull-requests-y-Pages.md)

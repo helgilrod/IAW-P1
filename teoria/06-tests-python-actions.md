@@ -124,3 +124,6 @@ Pestaña **Actions** → el workflow → cada job → despliega el paso de los t
 - [ ] Hacer tres jobs con runs-on distinto y una versión de Python distinta en cada uno.
 - [ ] Explicar la diferencia entre tres jobs y una matriz.
 - [ ] Encontrar en la pestaña Actions por qué ha fallado un job.
+
+---
+[← 05 GitHub Actions y YAML](05-actions-yaml.md) · [Índice](../README.md) · [07 Ejemplos de workflows →](07-ejemplos-actions.md)

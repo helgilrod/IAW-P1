@@ -81,3 +81,12 @@ jobs:
 5. Comprueba rutas relativas de CSS, JavaScript e imágenes.
 
 Commit guarda cambios en historial; push sube commits; build genera archivos; artifact conserva archivos generados; deploy publica la aplicación.
+
+## Comprueba que sabes
+- [ ] Publicar una web personal en usuario.github.io.
+- [ ] Publicar un proyecto desde la carpeta /docs.
+- [ ] Encontrar la URL publicada y seguir el despliegue en Actions.
+- [ ] Explicar la diferencia entre build, artifact y deploy.
+
+---
+[← 07 Ejemplos de workflows](07-ejemplos-actions.md) · [Índice](../README.md)

@@ -1,7 +1,9 @@
 # Práctica 1. Crear un repositorio Git y trabajar con commits
 
-## Qué se aprende
+## Objetivo
 Git guarda versiones del proyecto. En esta práctica se crea un repositorio, se prepara un archivo para guardarlo, se registra un commit, se consulta el historial y se compara qué hacen `reset --soft`, `--mixed` y `--hard`.
+
+**Teoría:** [Terminal y Git](../teoria/01-terminal-git.md) · [Repositorios de cero](../teoria/03-repos-de-cero.md)
 
 ## 1. Crear la carpeta y activar Git
 ```bash
@@ -84,7 +86,10 @@ git push -u origin main
 - `-u` deja configurado el seguimiento; los siguientes envíos son solo `git push`.
 - Como contraseña, GitHub pide un token personal, no la contraseña de la cuenta.
 - Si sale `rejected ... (fetch first)`, el remoto tiene commits que tú no: `git pull --rebase origin main` y vuelve a hacer push.
-- Más errores típicos y sus soluciones, en [Repositorios de cero](../teoria/06-repos-de-cero.md#errores-típicos).
+- Más errores típicos y sus soluciones, en [Repositorios de cero](../teoria/03-repos-de-cero.md#errores-típicos).
 
 ## Comprobación final
 Ejecuta `git status` y `git log --oneline`. Debes poder explicar qué está en el directorio de trabajo, qué está preparado y qué forma parte del historial.
+
+---
+[Índice de prácticas](README.md) · [Práctica 2 →](02-Publicar-web-personal-con-GitHub-Pages.md)

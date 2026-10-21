@@ -3,6 +3,8 @@
 ## Objetivo
 Utilizar GitHub Actions para ejecutar PyInstaller en tres sistemas operativos y generar un ejecutable para cada plataforma.
 
+**Teoría:** [GitHub Actions y YAML](../teoria/05-actions-yaml.md) · [Tests de Python en Actions](../teoria/06-tests-python-actions.md) · [Ejemplos de workflows](../teoria/07-ejemplos-actions.md)
+
 ## 1. Preparar el repositorio
 Comprueba que `comprova_desplegaments.py` está en la raíz. Crea la carpeta de workflows:
 ```bash
@@ -84,7 +86,10 @@ Si algún test falla, el job sale en rojo y no se compila.
 
 **Matriz.** Sustituye los tres jobs por uno solo con `strategy.matrix`. Úsala solo si el enunciado no exige tres jobs con nombres concretos.
 
-Más detalle en [Tests de Python en GitHub Actions](../teoria/07-tests-python-actions.md).
+Más detalle en [Tests de Python en GitHub Actions](../teoria/06-tests-python-actions.md).
 
 ## Ideas importantes y errores
 Un ejecutable creado en Linux no sustituye al de Windows o macOS: cada sistema necesita su propio build. Si falla, comprueba el nombre del script, la versión de Python, la instalación de dependencias y el log del job. Añade pruebas del ejecutable solo con comandos adecuados para cada sistema operativo.
+
+---
+[← Práctica 2](02-Publicar-web-personal-con-GitHub-Pages.md) · [Índice de prácticas](README.md) · [Práctica 4 →](04-Compilar-C-con-Makefile-y-guardar-artefacto.md)

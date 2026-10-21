@@ -141,4 +141,25 @@ steps:
 El archivo debe existir en la ruta indicada. Un artefacto no es un commit ni una publicación en Pages.
 
 ## Errores frecuentes
-Indentación incorrecta o tabulaciones; workflow fuera de .github/workflows; rama equivocada; confundir uses y run; olvidar checkout; dependencias no instaladas; ruta de artefacto inexistente; secreto no configurado; olvidar needs. En examen, respeta las versiones indicadas por el profesor.
+- Indentación incorrecta o tabulaciones.
+- Workflow fuera de .github/workflows.
+- Rama equivocada en on.push.branches.
+- Confundir uses (acción) y run (comando).
+- Olvidar checkout: el job no tiene el código.
+- Dependencias no instaladas.
+- Ruta de artefacto inexistente.
+- Secreto no configurado.
+- Olvidar needs cuando un job depende de otro.
+
+En el examen, respeta las versiones indicadas por el profesor.
+
+## Comprueba que sabes
+- [ ] Escribir de memoria la plantilla básica: name, on, jobs, runs-on y steps.
+- [ ] Explicar la diferencia entre uses, run y with.
+- [ ] Hacer que un job espere a otro con needs.
+- [ ] Ejecutar un paso solo si falla el anterior.
+- [ ] Repetir un job con una matriz de versiones.
+- [ ] Guardar un fichero generado como artefacto.
+
+---
+[← 04 Ramas, merge y tags](04-ramas-merge-tags.md) · [Índice](../README.md) · [06 Tests de Python en Actions →](06-tests-python-actions.md)
