@@ -15,6 +15,14 @@ En GitHub: Settings → Pages, selecciona la rama (normalmente main) y la carpet
 - Repositorio personal: usuario.github.io → https://usuario.github.io/
 - Repositorio de proyecto: mi-proyecto → https://usuario.github.io/mi-proyecto/
 
+## Web personal usuario.github.io
+- El repositorio tiene que llamarse **exactamente** tu-usuario.github.io, con tu nombre de usuario real de GitHub.
+- Solo hay uno por cuenta. Para empezar de cero, bórralo (Settings → General → Danger Zone) y créalo otra vez.
+- Puedes subir los archivos desde la web: **Add file** → **Upload files**. Sube el contenido de la carpeta, no el .zip, e index.html tiene que quedar en la raíz.
+- Activa la publicación en Settings → Pages: **Deploy from a branch**, rama main, carpeta / (root), **Save**.
+- Tarda uno o dos minutos. El progreso se ve en la pestaña Actions («pages build and deployment»), y la URL aparece arriba en Settings → Pages.
+- Mientras se publica puedes seguir trabajando. Cada push a main vuelve a publicar.
+
 ## Publicar desde docs
 ~~~text
 repositorio/

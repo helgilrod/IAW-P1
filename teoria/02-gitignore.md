@@ -41,4 +41,16 @@ git add .
 git status
 ~~~
 
+## Ignorar una carpeta y comprobarlo
+~~~bash
+echo "temporales/" > .gitignore
+git status
+git check-ignore -v temporales/prueba.txt
+git status --ignored
+~~~
+- Con la barra final, temporales/ ignora esa carpeta y todo lo que contiene.
+- git check-ignore -v dice qué regla, y de qué fichero, ignora una ruta. Si no imprime nada, la ruta no se ignora.
+- git status --ignored lista también lo ignorado.
+- Haz primero el commit del .gitignore y después el de los demás ficheros: así nada de lo ignorado llega a entrar.
+
 Importante: .gitignore no deja de seguir un archivo ya controlado. Para quitarlo del índice sin borrarlo del disco: git rm --cached archivo; después crea un commit. No guardes contraseñas, tokens ni claves privadas en el repositorio.
