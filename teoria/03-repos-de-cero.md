@@ -1,15 +1,43 @@
 # Repositorios de cero: GitHub web + terminal
 
+## Dos maneras de empezar
+Las dos acaban igual: una carpeta en tu ordenador conectada a un repositorio de GitHub. La diferencia es **dónde nace primero**.
+
+| | Clonar | Conectar una carpeta |
+|---|---|---|
+| Qué existe primero | El repositorio en GitHub | Los ficheros en tu ordenador |
+| Al crearlo en GitHub | **Con** README | **Sin** README |
+| En la terminal | git clone URL y cd a la carpeta | git init, git remote add origin URL y git branch -M main |
+| Primer push | git push | git push -u origin main |
+| Cuándo | Empiezas de cero | Ya tienes los ficheros |
+
+Como en Drive: clonar es descargarte una carpeta compartida que ya existe; conectar es subir una carpeta que tienes a una carpeta vacía.
+
+En el examen: «crea el repositorio en GitHub y clónalo» es la primera; «crea una carpeta, inicializa Git y súbela» es la segunda. Si te dejan elegir, clonar tiene menos pasos y menos errores.
+
 ## Crear un repositorio en GitHub (web)
 1. Botón **+** (arriba a la derecha) → **New repository**.
 2. **Repository name**: el nombre exacto que pidan (mayúsculas y guiones cuentan).
 3. **Public** o **Private**, según el enunciado.
-4. **Sin** README, .gitignore ni licencia si vas a subir desde tu ordenador.
+4. **Add a README file**: márcalo si vas a clonarlo; déjalo sin marcar (y sin .gitignore ni licencia) si vas a conectar una carpeta que ya tienes.
 5. **Create repository** y copia la URL HTTPS del botón **Code**.
 
-Por qué sin README: si GitHub crea un commit inicial, tu primer push se rechaza, porque el remoto tiene un historial que tu repositorio local no tiene.
+## Manera 1: clonar
+~~~bash
+cd ~
+git clone https://github.com/USUARIO/practica-git.git
+cd practica-git
+nano README.md
+git add README.md
+git commit -m "Actualizar README"
+git push
+~~~
+- git clone crea la carpeta con el nombre del repositorio, hace el git init, conecta origin y se baja los commits. Por eso aquí no hacen falta git init ni git remote add.
+- Recuerda el cd: hasta que no entras en la carpeta, no estás en el repositorio.
+- El push funciona directamente, sin -u: la rama ya sabe a dónde sube.
+- Si el repositorio ya está en tu ordenador, no lo clones otra vez: trae lo último con git pull.
 
-## Conectar una carpeta local con ese repositorio
+## Manera 2: conectar una carpeta que ya tienes
 ~~~bash
 mkdir -p ~/practica-git
 cd ~/practica-git
@@ -21,7 +49,8 @@ git remote -v
 - mkdir -p crea la carpeta y no da error si ya existe.
 - git branch -M main renombra la rama actual a main (GitHub espera main).
 - git remote -v comprueba que origin apunta a la URL correcta.
-- El push necesita al menos un commit hecho.
+- Después creas los ficheros, haces el commit y el primer push con git push -u origin main (lo tienes en los apartados siguientes). El push necesita al menos un commit hecho.
+- Por qué el repositorio va sin README: si GitHub tiene un commit que tú no tienes, son dos historias que no encajan y el primer push se rechaza (*fetch first*).
 
 ## Crear ficheros desde la terminal
 ~~~bash
@@ -94,18 +123,6 @@ cd practica
 ## Subir archivos desde la web
 **Add file** → **Upload files** → arrastra el **contenido** de la carpeta (no el .zip) → **Commit changes**. Si arrastras carpetas, GitHub mantiene su estructura.
 
-## Clonar un repositorio para editarlo en local
-~~~bash
-cd ~
-git clone https://github.com/USUARIO/practica-git.git
-cd practica-git
-nano README.md
-git add README.md
-git commit -m "Actualizar README"
-git push
-~~~
-Si el repositorio ya está en tu ordenador, en lugar de clonarlo trae lo último con git pull.
-
 ## Borrar un repositorio
 Settings → General → **Danger Zone** → **Delete this repository**, y escribe el nombre para confirmar. No se puede deshacer.
 
@@ -118,10 +135,13 @@ Si haces git init en una carpeta que está dentro de otro repositorio, quedan do
 | remote origin already exists | Ya habías añadido el remoto | git remote set-url origin URL |
 | src refspec main does not match any | No hay commits, o la rama no se llama main | Haz un commit; git branch -M main |
 | rejected ... (fetch first) | El remoto tiene commits que tú no (README creado en la web) | git pull --rebase origin main y vuelve a hacer push |
+| You appear to have cloned an empty repository | Has clonado un repositorio creado sin README | No es un error: crea un fichero, haz commit, git branch -M main y git push -u origin main |
 | Authentication failed | Has usado la contraseña en vez de un token | Usa un token o gh auth login |
 | not a git repository | No estás en la carpeta del repositorio | cd a la carpeta; ls -a debe mostrar .git |
 
 ## Comprueba que sabes
+- [ ] Explicar cuándo se clona y cuándo se conecta una carpeta, y por qué cambia lo del README.
+- [ ] Crear un repositorio con README en GitHub y clonarlo.
 - [ ] Crear un repositorio vacío en GitHub y conectarlo con una carpeta local.
 - [ ] Crear un fichero con echo y otro con nano.
 - [ ] Guardar la salida de git log --oneline en un fichero.
